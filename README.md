@@ -22,7 +22,7 @@ _**SEARCH INDEX BOOK**_
 
 _**SEARCH INDEX BOOK SPRINGBOOT APP**_
 - Search fuziness with paging : **http://hostname:port/search/fuzzi/{page}/{field-name}/{keyword}**  
-  example: http://localhost:8080/search/fuzzi/0/title/belajar  
+  example: http://localhost:8080/search/fuzzi/0/title/belanja  
 - Search auto complete : **http://hostname:port/search/auto-complete/{keyword}**  
  example: http://localhost:8080/search/auto-complete/belajar%20g  
 - Search suggestion : **http://hostname:port/search/suggest/{keyword}**  
