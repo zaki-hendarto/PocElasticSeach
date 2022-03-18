@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "524e50a9-1d51-423b-b85f-3168858d094d",
+		"name": "ElasticSeach",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ListIndices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_cat/indices?v=true&s=index",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cat",
+						"indices"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "true"
+						},
+						{
+							"key": "s",
+							"value": "index"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"settings\": {\r\n        \"number_of_shards\": 2,\r\n        \"number_of_replicas\": 0\r\n    },\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"title\": {\r\n                \"type\": \"text\",\r\n                \"fields\": {\r\n                    \"keyword\": {\r\n                        \"type\": \"keyword\"\r\n                    }\r\n                }\r\n            },\r\n            \"description\": {\r\n                \"type\": \"text\",\r\n                \"fields\": {\r\n                    \"keyword\": {\r\n                        \"type\": \"keyword\"\r\n                    }\r\n                }\r\n            },\r\n            \"suggest\": {\r\n                \"type\": \"search_as_you_type\"\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detail Index",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Index",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Push Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"index\":{\"_index\":\"book\",\"_id\":\"1a2ad890dd5ef9261ae2dfddc9aba33e\"}}\r\n{\"suggest\":\"belajar golang\",\"title\":\"belajar golang\",\"description\":\"Belajar menggunakan bahasa golang\"}\r\n{\"index\":{\"_index\":\"book\",\"_id\":\"ff56cd07f38d64449ddf26b1b7e55ec\"}}\r\n{\"suggest\":\"belajar java\",\"title\":\"belajar java\",\"description\":\"Belajar menggunakan bahasa java\"}\r\n{\"index\":{\"_index\":\"book\",\"_id\":\"ff56cd07f38d64449ddf26b1b7e55ed\"}}\r\n{\"suggest\":\"belajar cpp\",\"title\":\"belajar cpp\",\"description\":\"Belajar menggunakan bahasa c plus plus\"}\r\n{\"index\":{\"_index\":\"book\",\"_id\":\"ff56cd07f38d64449ddf26b1b7e55ee\"}}\r\n{\"suggest\":\"belajar net\",\"title\":\"belajar net\",\"description\":\"Belajar menggunakan bahasa c sharp dan dotnet\"}\r\n{\"index\":{\"_index\":\"book\",\"_id\":\"ff56cd07f38d64449ddf26b1b7e55ef\"}}\r\n{\"suggest\":\"belajar python\",\"title\":\"belajar python\",\"description\":\"Belajar menggunakan bahasa python\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/_bulk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seach fuzzi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"query\": \"jawa belajare\",\r\n            \"fields\": [\"description\", \"title\"],\r\n            \"operator\": \"AND\",\r\n            \"fuzziness\": \"1\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AutoComplete Multi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"size\": 5,\r\n  \"query\": {\r\n\r\n    \"multi_match\": {\r\n      \"query\": \"bela\",\r\n      \"type\": \"bool_prefix\",\r\n      \"fields\": [\r\n        \"suggest\",\r\n        \"suggest._2gram\",\r\n        \"suggest._3gram\"\r\n      ]\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suggest word",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"suggest\": {\r\n        \"text\": \"belanja piton jawa\",\r\n        \"suggestion\": {\r\n            \"term\": {\r\n                \"field\": \"suggest\"\r\n\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AutoComplete Match Prefix",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"match_phrase_prefix\": {\r\n            \"suggest\": \"belajar j\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seach fuzzi paging sorting",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": 0,\r\n    \"size\": 2,\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"query\": \"belajar\",\r\n            \"fields\": [\"description^1.0\", \"title^1.0\"],\r\n            \"operator\": \"AND\",\r\n            \"fuzziness\": \"AUTO\"\r\n        }\r\n    },\r\n    \"sort\": [{\r\n            \"title.keyword\": {\r\n                \"order\": \"asc\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/book/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"book",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
