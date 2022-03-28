@@ -1,3 +1,12 @@
-cf push -f cloud-foundry/poc-elastic.yaml
+### CREATE ORG ###
+cf create-org poc
+### CREATE SPACE ###
+cf create-space -o poc poc-space
+### CHANGE ORG AND SPACE ###
+cf target -o poc -s poc-space
+### CREATE SECURITY ACCESS 192.168.88.0/24 ###
 cf create-security-group ASG_LOCAL cloud-foundry/ASG_ELASTIC.json
+### BIND SECURITY ACCESS to ORG and SPACE ###
 cf bind-security-group ASG_LOCAL poc --space poc-space
+### PUSH APP ###
+cf push -f cloud-foundry/poc-elastic.yaml
