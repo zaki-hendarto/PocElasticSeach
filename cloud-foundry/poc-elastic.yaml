@@ -1,0 +1,8 @@
+applications:
+  - name: poc-elastic
+    instances: 1  
+    path: ../target/elasticsearch-1.0.0.jar
+    buildpacks: 
+      - java_buildpack
+    env:
+      elasticsearch.url: elastic.server.win:9200

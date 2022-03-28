@@ -1,0 +1,3 @@
+cf push -f cloud-foundry/poc-elastic.yaml
+cf create-security-group ASG_LOCAL cloud-foundry/ASG_ELASTIC.json
+cf bind-security-group ASG_LOCAL poc --space poc-space

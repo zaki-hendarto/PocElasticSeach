@@ -1,0 +1,8 @@
+[{
+        "protocol": "tcp",
+        "destination": "192.168.88.0/24",
+        "ports": "80,443,9200",
+        "log": true,
+        "description": "Allow http and https traffic to SameZone"
+    }
+]
