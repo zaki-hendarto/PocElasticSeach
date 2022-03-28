@@ -17,6 +17,8 @@
 		<java.version>8</java.version>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <maven.test.skip>true</maven.test.skip>
 	</properties>
 	<dependencies>
 		<dependency>
